@@ -36,6 +36,10 @@ const Exchanges = () => {
       {loading? (
       <Loader/>
       ):(
+        <div>
+
+        <h1 className='bg-black p-12 text-white text-[18px] border-2 border-white'>Discover top cryptocurrency trading platforms. Click to access each site directly. Stay informed, trade smarter with Cryptify.</h1>
+
 
         <div className='h-full w-full flex flex-wrap gap-10 p-12 justify-center custom bg-black'>
 
@@ -43,6 +47,8 @@ const Exchanges = () => {
         <ExchangeCard key={i.id} name={i.name} img={i.image} rank={i.trust_score_rank} url={i.url} />
 
       ))}
+      </div>
+
       </div>
       )
       }

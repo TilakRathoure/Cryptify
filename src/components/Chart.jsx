@@ -39,6 +39,7 @@ const Chart = ({ arr = [], currency, days }) => {
         data: prices,
         borderColor: "#0aabcf",
         backgroundColor: "#0aabcf",
+        color:"white"
       },
     ],
   };
@@ -48,16 +49,16 @@ const Chart = ({ arr = [], currency, days }) => {
     options={{
       responsive: true,
       scales: {
-        xAxes: [{
+        x: {
           ticks: {
-            color: "white" // Set color of x-axis labels to white
+            color: "white"
           }
-        }],
-        yAxes: [{
+        },
+        y: {
           ticks: {
-            color: "white" // Set color of y-axis labels to white
+            color: "white"
           }
-        }]
+        }
       }
       }}
       data={data}
