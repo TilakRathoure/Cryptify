@@ -3,8 +3,9 @@ import {Link} from 'react-router-dom'
 
 const Header = () => {
   return (
-    <div className='sticky top-0'>
-    <div className='w-full h-[9vh] bg-black'>
+    <div className='sticky top-0 custom font-light z-20'>
+    <div className='w-full h-[12vh] flex justify-between items-center bg-black px-12'>
+        <div className='text-white uppercase'>Cryptify.</div>
         <ul className='flex h-full items-center gap-4'>
             <li className='ml-3 text-white text-xl'>
                 <Link to={"/"}>Home</Link>

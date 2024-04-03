@@ -37,16 +37,28 @@ const Chart = ({ arr = [], currency, days }) => {
       {
         label: `Price in ${currency}`,
         data: prices,
-        borderColor: "rgb(255,99,132)",
-        backgroundColor: "rgba(255,99,132,0.5)",
+        borderColor: "#0aabcf",
+        backgroundColor: "#0aabcf",
       },
     ],
   };
 
   return (
     <Line
-      options={{
-        responsive: true,
+    options={{
+      responsive: true,
+      scales: {
+        xAxes: [{
+          ticks: {
+            color: "white" // Set color of x-axis labels to white
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            color: "white" // Set color of y-axis labels to white
+          }
+        }]
+      }
       }}
       data={data}
     />

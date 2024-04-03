@@ -26,19 +26,25 @@ const Exchanges = () => {
 
     if(error){
       return(
-        <div className='h-[70vh] w-full'>An Error has Occured</div>
+        <div className='custom h-[58vh] w-full text-xl'>An Error has Occured while fetching data, try reloading!</div>
       )
     }
 
 
   return (
-    <div className='h-full w-full flex flex-wrap gap-10 p-12'>
+    <div className='custom'>
       {loading? (
       <Loader/>
       ):(
-      exchanges.map((i)=>(
+
+        <div className='h-full w-full flex flex-wrap gap-10 p-12 justify-center custom bg-black'>
+
+      {exchanges.map((i)=>(
         <ExchangeCard key={i.id} name={i.name} img={i.image} rank={i.trust_score_rank} url={i.url} />
-      )))
+
+      ))}
+      </div>
+      )
       }
     </div>
   )
@@ -47,7 +53,7 @@ const Exchanges = () => {
 const ExchangeCard = ({name,img,rank,url}) => {
   return (
     <a href={url} target='blank'>
-    <div className='w-[200px] h-[250px] shadow-xl flex flex-col items-center content-center p-5 gap-5'>
+    <div className='border-t-2 border-t-white rounded-xl w-[200px] h-[250px] shadow-lg  flex flex-col items-center content-center p-5 gap-5 text-white shadow-white'>
       <img src={img} className='w-[100px] h-[100px]'/>
       <h2 className='text-[18px] w-full text-center'>{name}</h2>
       <p > {rank}</p>

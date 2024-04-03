@@ -49,8 +49,8 @@ const currencyhandler=(e)=>{
 
   if(error){
     return(
-      <div className='h-[60vh]'>
-        <h1 className='text-3xl'>An error has occured while fetching data</h1>
+      <div className='custom h-[58vh]'>
+        <h1 className='text-xl'>An Error has Occured while fetching data, try reloading!</h1>
       </div>
     )
   }
@@ -58,17 +58,17 @@ const currencyhandler=(e)=>{
 
 
   return (
-    <div className=''>
+    <div className='custom bg-black text-white'>
       {loading? (
       <Loader/>
       ) : (
 
 
-        <>
+        <div className=''>
 
-        <div className='flex gap-5 m-10'>
+        <div className='flex gap-5 p-10 '>
           {currencyList.map((i)=>(
-            <div className=''>
+            <div className='cursor-pointer'>
               <label>
                 <input type="radio" value={i.value} className='mr-2' onChange={currencyhandler} checked={eval(i.check)}/>
                 {i.name}
@@ -79,7 +79,7 @@ const currencyhandler=(e)=>{
 
 
 
-        <div className='h-full w-full flex flex-wrap gap-10 p-12'>
+        <div className='h-full w-full flex flex-wrap gap-10 p-12 justify-center'>
       {exchanges.map((i)=>(
         <Coincard 
         id={i.id}
@@ -103,7 +103,7 @@ const currencyhandler=(e)=>{
 
 
 
-      </>
+      </div>
 
       )}
     </div>
@@ -113,7 +113,7 @@ const currencyhandler=(e)=>{
 const Coincard = ({id,name,price,img,currencySymbol}) => {
   return (
     <Link to={`/coin/${id}`}>
-    <div className='w-[200px] h-[250px] shadow-xl flex flex-col items-center content-center p-5 gap-5'>
+    <div className='w-[200px] h-[250px] shadow-lg flex flex-col items-center content-center p-5 gap-5 shadow-white border-t-2 border-t-white rounded-lg'>
       <img src={img} className='w-[100px] h-[100px]'/>
       <h2 className='text-[18px] w-full text-center'>{name}</h2>
       <p >{currencySymbol} {price}</p>

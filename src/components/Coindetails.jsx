@@ -100,16 +100,18 @@ const Coindetails = () => {
 
       if(error){
         return(
-          <div className='h-[70vh] w-full'>An Error has Occured</div>
+          <div className='custom h-[58vh]'>
+          <h1 className='text-xl'>An Error has Occured while fetching data, try reloading!</h1>
+        </div>
         )
       }
 
   return (
-    <div>
+    <div className="bg-black text-white">
         {loading? <Loader/> : <>
 
 
-        <div className='flex gap-5 m-10'>
+        <div className='flex gap-5 p-10 custom'>
           {currencyList.map((i)=>(
             <div className=''>
               <label>
@@ -121,28 +123,28 @@ const Coindetails = () => {
         </div>
 
 
-        <div>
+        <div className="custom">
           <Chart arr={chartArray} currency={currencySymbol} days={days}/>
         </div>
 
 
-        <div className="p-4 flex gap-2 cursor-pointer">
+        <div className="p-4 flex gap-2 custom">
             {btns.map((i) => (
-              <div className="w-[30px] h-[30px] border-2 border-grey-200" onClick={()=>switchChartStats(i)}>
+              <div className="w-[40px] h-[30px] border-2 border-grey-200 text-center cursor-pointer" onClick={()=>switchChartStats(i)}>
                 {i}
                 </div>
             ))}
           </div>
 
 
-        <div className="flex flex-col gap-4 p-16 items-start">
+        <div className="flex flex-col gap-4 p-16 items-start custom">
   <p className="text-sm self-center opacity-70">
     Last Updated On {new Date(coin.market_data.last_updated).toString().split("GMT")[0]}
   </p>
 
   <img src={coin.image.large} alt="Coin Image" className="w-16 h-16 object-contain" />
 
-  <div>
+  <div className="custom">
     <h2>{coin.name}</h2>
     <p>
       {currencySymbol}
@@ -154,24 +156,25 @@ const Coindetails = () => {
     </p>
   </div>
 
-  <span className="text-2xl bg-black text-white px-4 py-2">
+  <span className="text-2xl bg-white text-black px-4 py-2 custom">
     #{coin.market_cap_rank}
   </span>
 
-  <div>
+  <div className="custom">
     <p>High: {currencySymbol}{coin.market_data.high_24h[currency]}</p>
     <p>Low: {currencySymbol}{coin.market_data.low_24h[currency]}</p>
   </div>
 </div>
 
 
-<div>
-    <CustomBar high={`${currencySymbol}${coin.market_data.high_24h[currency]}`}
-              low={`${currencySymbol}${coin.market_data.low_24h[currency]}`} />
+<div className="custom">
+    <CustomBar high={coin.market_data.high_24h[currency]}
+              low={coin.market_data.low_24h[currency]}
+              current={coin.market_data.current_price[currency]} />
 </div>
 
 
-<div className="w-full p-4">
+<div className="w-full p-4 custom">
   <div className="grid gap-4">
 
     {details.map((i)=>(
@@ -194,10 +197,13 @@ const Coindetails = () => {
   )
 }
 
-const CustomBar = ({ high, low }) => (
+const CustomBar = ({ current, high, low }) => {
+  const final = ((current - low) / (high - low)) * 100;
+
+  return (
     <div className="w-full">
       <div className="bg-teal-500 h-4 rounded-full">
-        <div className="bg-white h-full w-1/2 rounded-full"></div>
+        <div className="bg-white h-full rounded-full" style={{ width: `${final}%` }}></div>
       </div>
       <div className="flex justify-between w-full">
         <span className="px-2 py-1 bg-red-500 text-white">{low}</span>
@@ -206,6 +212,9 @@ const CustomBar = ({ high, low }) => (
       </div>
     </div>
   );
+};
+
+
   
 
 export default Coindetails
