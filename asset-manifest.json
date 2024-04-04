@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Cryptify/static/css/main.3e928af1.css",
-    "main.js": "/Cryptify/static/js/main.259404c8.js",
+    "main.js": "/Cryptify/static/js/main.c3eafc2a.js",
     "static/media/1_VqKuTe9DmMZZRT0ERH2t4Q__1_-removebg.png": "/Cryptify/static/media/1_VqKuTe9DmMZZRT0ERH2t4Q__1_-removebg.20bb109b24828a465123.png",
     "static/media/github.png": "/Cryptify/static/media/github.f11021803f68852df283.png",
     "static/media/linkedin.png": "/Cryptify/static/media/linkedin.f249b38224ca41a0b909.png",
     "index.html": "/Cryptify/index.html",
     "main.3e928af1.css.map": "/Cryptify/static/css/main.3e928af1.css.map",
-    "main.259404c8.js.map": "/Cryptify/static/js/main.259404c8.js.map"
+    "main.c3eafc2a.js.map": "/Cryptify/static/js/main.c3eafc2a.js.map"
   },
   "entrypoints": [
     "static/css/main.3e928af1.css",
-    "static/js/main.259404c8.js"
+    "static/js/main.c3eafc2a.js"
   ]
 }
