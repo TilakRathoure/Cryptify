@@ -9,14 +9,13 @@ import Coindetails from './components/Coindetails'
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/Cryptify">
       <Header/>
-      <Routes basename="/Cryptify">
+      <Routes>
       <Route path='/Cryptify' element={<Home/>}/>
         <Route path='/exchange' element={<Exchange/>} />
         <Route path='/coins' element={<Coins/>}/>
         <Route path='/coin/:id' element={<Coindetails/>}/>
-
       </Routes>
       <Footer/>
     </Router>
