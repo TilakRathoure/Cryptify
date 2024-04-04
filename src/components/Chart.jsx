@@ -45,9 +45,10 @@ const Chart = ({ arr = [], currency, days }) => {
   };
 
   return (
+    <div className="h-[72vh]">
     <Line
     options={{
-      responsive: true,
+      responsive:true,
       scales: {
         x: {
           ticks: {
@@ -62,7 +63,7 @@ const Chart = ({ arr = [], currency, days }) => {
       }
       }}
       data={data}
-    />
+    /></div>
   );
 };
 
