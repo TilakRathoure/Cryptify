@@ -12,7 +12,7 @@ const App = () => {
     <Router basename="/Cryptify">
       <Header/>
       <Routes>
-      <Route path='/Cryptify' element={<Home/>}/>
+      <Route path='/' element={<Home/>}/>
         <Route path='/exchange' element={<Exchange/>} />
         <Route path='/coins' element={<Coins/>}/>
         <Route path='/coin/:id' element={<Coindetails/>}/>
