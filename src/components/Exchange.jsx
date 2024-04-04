@@ -26,7 +26,9 @@ const Exchanges = () => {
 
     if(error){
       return(
+        <div className='custom h-[58vh]'>
         <h1 className='text-xl mt-[10px]'>An Error has Occured while fetching data, try changing page or reloading!</h1>
+        </div>
       )
     }
 
