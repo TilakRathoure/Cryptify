@@ -1,3 +1,18 @@
+# Cryptify
+
+Explore Cryptify: your go-to platform for cryptocurrency trading and insights. Access top trading websites, real-time prices, and detailed information on popular cryptocurrencies. Whether you're new or experienced, Cryptify offers tools to track prices, compare exchanges, and analyze trends. Join our community and dive into the world of crypto trading with confidence.
+
+# Screenshots
+
+
+![Screenshot 2024-04-04 113043](https://github.com/TilakRathoure/Cryptify/assets/126514769/663419d9-54be-4ec9-b451-5cad1b4696b7)
+
+![Screenshot 2024-04-04 114138](https://github.com/TilakRathoure/Cryptify/assets/126514769/42fa6fa7-f9a6-45ae-8184-efd1127fcfd7)
+
+![Screenshot 2024-04-04 110113](https://github.com/TilakRathoure/Cryptify/assets/126514769/13e5643c-fd4b-498c-b791-4d7794136819)
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
