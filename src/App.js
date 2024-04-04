@@ -11,11 +11,11 @@ const App = () => {
   return (
     <Router>
       <Header/>
-      <Routes>
+      <Routes basename="/Cryptify">
       <Route path='/Cryptify' element={<Home/>}/>
-        <Route path='/Cryptify/exchange' element={<Exchange/>} />
-        <Route path='/Cryptify/coins' element={<Coins/>}/>
-        <Route path='/Cryptify/coin/:id' element={<Coindetails/>}/>
+        <Route path='/exchange' element={<Exchange/>} />
+        <Route path='/coins' element={<Coins/>}/>
+        <Route path='/coin/:id' element={<Coindetails/>}/>
 
       </Routes>
       <Footer/>
