@@ -20,6 +20,9 @@ const Coins = () => {
   currency==="inr"? "₹" : currency === "eur"  ? "€" : "$";
 
 
+  const [usingsearch,Setsearch]=useState("");
+
+
   const currencyList=[{name:"Indian Rupee (INR)" , value:"inr" ,"check":"currency=='inr'"},
 {name:"Euro (EUR)" ,"check":"currency=='eur'", value:"eur"},{name:"United States Dollar (USD)" , value:"usd","check":"currency=='usd'"}]
 
@@ -27,8 +30,9 @@ const currencyhandler=(e)=>{
   setcurrency(e.target.value)
 }
 
-
-
+const search = exchanges.filter(i =>
+  i.name.toLowerCase().includes(usingsearch.toLowerCase())
+);
 
 
   useEffect(()=>{
@@ -77,7 +81,7 @@ const currencyhandler=(e)=>{
 
 
         <div className='flex flex-col gap-0'>
-        <div className='bg-black p-12 border-2'>Explore all cryptocurrencies with detailed charts and information. Click to access comprehensive data and make informed decisions. Cryptify: Your gateway to the crypto world, empowering you to trade with confidence</div>
+        <div className='bg-black p-12 border-2'>Explore all cryptocurrencies with detailed <span className='text-yellow-300'>charts </span>and information. Click to access comprehensive data and make informed decisions. Cryptify: Your gateway to the crypto world, empowering you to trade with confidence</div>
 
           <div className='flex gap-5 p-10 '>
           {currencyList.map((i)=>(
@@ -91,10 +95,16 @@ const currencyhandler=(e)=>{
           </div>
         </div>
 
+        <div className='w-full flex justify-between'>
+          <div>
+            </div>
+          <input className=' rounded-md pl-2 text-black mr-10 md:mr-[120px]' type='text' value={usingsearch} placeholder='search here' onChange={(e)=>{Setsearch(e.target.value)}}/>
+        </div>
+
 
 
         <div className='mt-[-15px] h-full w-full flex flex-wrap gap-10 p-12 justify-center'>
-      {exchanges.map((i)=>(
+      {search.length>0 ? (search.map((i)=>(
         <Coincard 
         id={i.id}
         key={i.id}
@@ -103,7 +113,7 @@ const currencyhandler=(e)=>{
         img={i.image}
         symbol={i.symbol}
         currencySymbol={symbol}/>
-      ))}
+      ))):<p>not found</p>}
       </div>
 
       <div className='flex items-center justify-center'>
@@ -134,7 +144,7 @@ const Coincard = ({id,name,price,img,currencySymbol}) => {
   return (
     <Link to={`/coin/${id}`}>
     <div className='w-[200px] h-[250px] shadow-lg flex flex-col items-center content-center p-5 gap-5 shadow-white border-t-2 border-t-white rounded-lg'>
-      <img src={img} className='w-[100px] h-[100px]'/>
+      <img src={img} alt='nice' className='w-[100px] h-[100px]'/>
       <h2 className='text-[18px] w-full text-center'>{name}</h2>
       <p >{currencySymbol} {price}</p>
     </div>

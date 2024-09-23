@@ -62,7 +62,7 @@ const ExchangeCard = ({name,img,rank,url}) => {
   return (
     <a href={url} target='blank'>
     <div className='border-t-2 border-t-white rounded-xl w-[200px] h-[250px] shadow-lg  flex flex-col items-center content-center p-5 gap-5 text-white shadow-white'>
-      <img src={img} className='w-[100px] h-[100px]'/>
+      <img src={img} alt='nice' className='w-[100px] h-[100px]'/>
       <h2 className='text-[18px] w-full text-center'>{name}</h2>
       <p > {rank}</p>
     </div>

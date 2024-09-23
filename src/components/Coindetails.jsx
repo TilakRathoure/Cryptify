@@ -94,7 +94,7 @@ const Coindetails = () => {
           }
         };
         fetchCoin();
-      }, [ currency, days]);
+      }, [currency, days]);
 
 
 
@@ -142,7 +142,7 @@ const Coindetails = () => {
     Last Updated On {new Date(coin.market_data.last_updated).toString().split("GMT")[0]}
   </p>
 
-  <img src={coin.image.large} alt="Coin Image" className="w-16 h-16 object-contain" />
+  <img src={coin.image.large} alt="Coin" className="w-16 h-16 object-contain" />
 
   <div className="custom">
     <h2>{coin.name}</h2>

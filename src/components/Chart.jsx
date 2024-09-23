@@ -45,7 +45,7 @@ const Chart = ({ arr = [], currency, days }) => {
   };
 
   return (
-    <div className="h-[72vh]">
+    <div className="md:h-[75vh]">
     <Line
     options={{
       responsive:true,
