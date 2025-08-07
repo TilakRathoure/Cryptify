@@ -95,10 +95,8 @@ const search = exchanges.filter(i =>
           </div>
         </div>
 
-        <div className='w-full flex justify-between'>
-          <div>
-            </div>
-          <input className=' rounded-md pl-2 text-black mr-10 md:mr-[120px]' type='text' value={usingsearch} placeholder='search here' onChange={(e)=>{Setsearch(e.target.value)}}/>
+        <div className='px-10'>
+          <input className=' rounded-md pl-2 w-full text-black md:mr-[120px] p-2 max-w-[300px]' type='text' value={usingsearch} placeholder='search here' onChange={(e)=>{Setsearch(e.target.value)}}/>
         </div>
 
 
@@ -143,8 +141,8 @@ const search = exchanges.filter(i =>
 const Coincard = ({id,name,price,img,currencySymbol}) => {
   return (
     <Link to={`/coin/${id}`}>
-    <div className='w-[200px] h-[250px] shadow-lg flex flex-col items-center content-center p-5 gap-5 shadow-white border-t-2 border-t-white rounded-lg'>
-      <img src={img} alt='nice' className='w-[100px] h-[100px]'/>
+    <div className='w-[120px] sm:w-[200px] shadow-lg flex flex-col items-center content-center p-5 gap-5 shadow-white border-t-2 border-t-white rounded-lg'>
+      <img src={img} alt='nice' className='w-[100px] h-[100px] object-contain'/>
       <h2 className='text-[18px] w-full text-center'>{name}</h2>
       <p >{currencySymbol} {price}</p>
     </div>

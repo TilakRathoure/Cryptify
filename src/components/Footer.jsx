@@ -5,7 +5,7 @@ import img2 from '../assests/linkedin.png'
 
 const Footer = () => {
   return (
-    <div className='py-4 h-[30vh] bg-black custom px-12 overflow-hidden'>
+    <div className='py-4 h-[30vh] bg-black custom px-5 md:px-20 overflow-hidden'>
         <h1 className='pb-1 text-white text-xl border-b-2 border-white w-[70px]'>
             About
         </h1>

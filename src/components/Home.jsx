@@ -8,7 +8,7 @@ const Home = () => {
   const list=[{name:"Real-time"},{name:"Comprehensive"},{name:"Insightful"}]
 
   return (
-    <div className='bg-black px-5 h-[58vh] pt-10'>
+    <div className='bg-black px-5 h-[58vh] pt-[80px]'>
       <h1 className='custom w-full text-center text-white text-5xl uppercase mb-[-15px] '>Cryptify</h1>
       <div id="move" className='py-[0px] w-full flex h-[200px] justify-center items-center relative '>
         <div>
