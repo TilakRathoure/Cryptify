@@ -1,24 +1,27 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.custom {
-    font-family: "Kanit", sans-serif;
-    font-weight: 100;
-    font-style: normal;
+@layer base {
+  html,
+  body,
+  #root {
+    @apply min-h-screen bg-cryptify-bg font-kanit text-white antialiased;
   }
 
-#move{
+  body {
+    font-weight: 300;
+  }
+}
+
+#move {
   animation: anim 2s linear infinite alternate;
 }
 
-@keyframes anim{
-  100%{
+@keyframes anim {
+  100% {
     transform: translateY(-30px);
   }
 }
-
-  
