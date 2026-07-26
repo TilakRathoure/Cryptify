@@ -1,30 +1,56 @@
-import React from 'react'
-import img1 from '../assests/github.png'
-import img2 from '../assests/linkedin.png'
-
+import React from "react";
+import github from "../assests/github.png";
+import linkedin from "../assests/linkedin.png";
 
 const Footer = () => {
   return (
-    <div className='py-4 h-[30vh] bg-black custom px-5 md:px-20 overflow-hidden'>
-        <h1 className='pb-1 text-white text-xl border-b-2 border-white w-[70px]'>
+    <footer className="border-t border-white/10 bg-black px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 md:flex-row md:items-start md:justify-between">
+        <div className="max-w-2xl">
+          <h2 className="mb-3 w-fit border-b border-cryptify-accent pb-1 text-lg text-white">
             About
-        </h1>
-        <div className='mt-5 flex justify-between gap-2'>
-            <div className=' text-white text-lg w-[70%]'>
-            
-Cryptify: Your go-to hub for cryptocurrency trading. Explore top trading websites, track prices, rankings, and trends with real-time updates and intuitive charts. Join us and dive into the world of crypto trading today!
-            </div>
-            <div className='text-white text-lg flex flex-col lg:mr-[150px]'>
-              <p>Created By</p>
-              <p className='text-nowrap'>Tilak Rathoure</p>
-              <div className='flex gap-2 mt-2'>
-              <a href="https://github.com/TilakRathoure"><img src={img1} alt="Github" className='bg-white rounded-sm w-[25px] hover:translate-y-[-2px]'/></a>
-              <a href="https://www.linkedin.com/in/tilakrathoure/"><img src={img2} alt="LinkedIn" className='w-[27px] hover:translate-y-[-2px] ' /></a>
-              </div>
-            </div>
+          </h2>
+          <p className="text-sm leading-relaxed text-white/70 md:text-base">
+            Cryptify: Your go-to hub for cryptocurrency trading. Explore top
+            trading websites, track prices, rankings, and trends with real-time
+            updates and intuitive charts. Join us and dive into the world of
+            crypto trading today!
+          </p>
         </div>
-    </div>
-  )
-}
 
-export default Footer
+        <div className="text-white">
+          <p className="text-sm text-white/60">Created By</p>
+          <p className="mt-1 text-lg">Tilak Rathoure</p>
+          <div className="mt-3 flex gap-3">
+            <a
+              href="https://github.com/TilakRathoure"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <img
+                src={github}
+                alt=""
+                className="w-6 rounded-sm bg-white transition hover:-translate-y-0.5"
+              />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/tilakrathoure/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <img
+                src={linkedin}
+                alt=""
+                className="w-7 transition hover:-translate-y-0.5"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
