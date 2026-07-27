@@ -1,154 +1,180 @@
-import React, { useRef } from 'react'
-import { server } from '..';
-import axios from 'axios';
-import { useEffect,useState } from 'react';
-import Loader from './Loader';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { server } from "..";
+import { currencySymbol, formatNumber, formatPercent } from "../constants";
+import Chip from "./Chip";
+import CurrencyToggle from "./CurrencyToggle";
+import EmptyState from "./EmptyState";
+import ErrorState from "./ErrorState";
+import Loader from "./Loader";
+import PageShell from "./PageShell";
+
+const TOTAL_PAGES = 132;
+
+const pageWindow = (current, total) => {
+  const pages = [];
+  const start = Math.max(1, current - 2);
+  const end = Math.min(total, current + 2);
+
+  if (start > 1) pages.push(1);
+  if (start > 2) pages.push("…");
+  for (let i = start; i <= end; i += 1) pages.push(i);
+  if (end < total - 1) pages.push("…");
+  if (end < total) pages.push(total);
+  return pages;
+};
 
 const Coins = () => {
-  const pagecontainer=useRef(null);
-  const [exchanges,setexchanges]=useState([]);
-  const [loading,setloading]=useState(true);
-  const [error,seterror]=useState(false);
-  const [currency,setcurrency]=useState("inr");
-  const [page,setpage]=useState(1);
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [currency, setCurrency] = useState("inr");
+  const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
 
-  const btns = new Array(132).fill(1);
+  const symbol = currencySymbol(currency);
 
-  const symbol = 
-  
-  currency==="inr"? "₹" : currency === "eur"  ? "€" : "$";
+  const filtered = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(query.toLowerCase())
+  );
 
-
-  const [usingsearch,Setsearch]=useState("");
-
-
-  const currencyList=[{name:"Indian Rupee (INR)" , value:"inr" ,"check":"currency=='inr'"},
-{name:"Euro (EUR)" ,"check":"currency=='eur'", value:"eur"},{name:"United States Dollar (USD)" , value:"usd","check":"currency=='usd'"}]
-
-const currencyhandler=(e)=>{
-  setcurrency(e.target.value)
-}
-
-const search = exchanges.filter(i =>
-  i.name.toLowerCase().includes(usingsearch.toLowerCase())
-);
-
-
-  useEffect(()=>{
-      const fetchapi=async ()=>{
-          try{
-          const {data}=await axios.get(`${server}/coins/markets?vs_currency=${currency}&page=${page}`);
-          setexchanges(data);
-          setloading(false);
-          }catch(error){
-              seterror(true);
-              setloading(false);
-          }
+  useEffect(() => {
+    const fetchCoins = async () => {
+      try {
+        setLoading(true);
+        setError(false);
+        const { data } = await axios.get(
+          `${server}/coins/markets?vs_currency=${currency}&page=${page}`
+        );
+        setCoins(data);
+      } catch (err) {
+        setError(true);
+      } finally {
+        setLoading(false);
       }
-      fetchapi();
-  },[currency,page]);
+    };
+    fetchCoins();
+  }, [currency, page]);
 
-
-  const scrollLeft = () => {
-    pagecontainer.current.scrollLeft -= 100; 
+  const changePage = (next) => {
+    if (next < 1 || next > TOTAL_PAGES || next === page) return;
+    setPage(next);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const scrollRight = () => {
-    pagecontainer.current.scrollLeft += 100; 
-  };
-
-
-
-  if(error){
-    return(
-      <div className='custom h-[58vh]'>
-        <h1 className='text-xl mt-[10px]'>An Error has Occured while fetching data, try changing page or reloading!</h1>
-      </div>
-    )
+  if (error) {
+    return (
+      <PageShell>
+        <ErrorState />
+      </PageShell>
+    );
   }
 
-
-
   return (
-    <div className='custom bg-black text-white'>
-      {loading? (
-      <Loader/>
+    <PageShell>
+      <p className="max-w-3xl text-base leading-relaxed text-white/80 sm:text-lg">
+        Explore all cryptocurrencies with detailed{" "}
+        <span className="text-cryptify-accent">charts</span> and information.
+        Click to access comprehensive data and make informed decisions.
+        Cryptify: Your gateway to the crypto world, empowering you to trade
+        with confidence.
+      </p>
+
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <CurrencyToggle
+          value={currency}
+          onChange={(value) => {
+            setCurrency(value);
+            setPage(1);
+          }}
+        />
+        <input
+          type="search"
+          value={query}
+          placeholder="Search coins"
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full rounded-full border border-white/20 bg-transparent px-4 py-2 text-white placeholder:text-white/40 focus:border-cryptify-accent focus:outline-none sm:max-w-xs"
+        />
+      </div>
+
+      {loading ? (
+        <Loader />
+      ) : filtered.length === 0 ? (
+        <EmptyState message="No coins match your search." />
       ) : (
-
-
-        <div className=''>
-
-
-        <div className='flex flex-col gap-0'>
-        <div className='bg-black p-12 border-2'>Explore all cryptocurrencies with detailed <span className='text-yellow-300'>charts </span>and information. Click to access comprehensive data and make informed decisions. Cryptify: Your gateway to the crypto world, empowering you to trade with confidence</div>
-
-          <div className='flex gap-5 p-10 '>
-          {currencyList.map((i)=>(
-            <div className='cursor-pointer'>
-              <label>
-                <input type="radio" value={i.value} className='mr-2' onChange={currencyhandler} checked={eval(i.check)}/>
-                {i.name}
-              </label>
-              </div>
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
+          {filtered.map((coin) => (
+            <CoinCard
+              key={coin.id}
+              id={coin.id}
+              name={coin.name}
+              symbol={coin.symbol}
+              price={coin.current_price}
+              img={coin.image}
+              change={coin.price_change_percentage_24h}
+              rank={coin.market_cap_rank}
+              currencySymbol={symbol}
+            />
           ))}
-          </div>
         </div>
-
-        <div className='px-10'>
-          <input className=' rounded-md pl-2 w-full text-black md:mr-[120px] p-2 max-w-[300px]' type='text' value={usingsearch} placeholder='search here' onChange={(e)=>{Setsearch(e.target.value)}}/>
-        </div>
-
-
-
-        <div className='mt-[-15px] h-full w-full flex flex-wrap gap-10 p-12 justify-center'>
-      {search.length>0 ? (search.map((i)=>(
-        <Coincard 
-        id={i.id}
-        key={i.id}
-        name={i.name}
-        price={i.current_price}
-        img={i.image}
-        symbol={i.symbol}
-        currencySymbol={symbol}/>
-      ))):<p>not found</p>}
-      </div>
-
-      <div className='flex items-center justify-center'>
-      <div className='flex w-[75vw] '>
-      <button className='w-[20px] px-4 bg-gray-800 text-white' onClick={scrollLeft}>{'<'}</button>
-      <div className='flex gap-[1px] overflow-hidden' ref={pagecontainer}>
-        {btns.map((e,i)=>(
-          <div className='border-[1px] border-white w-[25px] flex-shrink-0 text-center cursor-pointer overflow-hidden' onClick={()=>{setpage(i+1)}}>
-            {i+1}
-          </div>
-        ))}
-      </div>
-      <button className='w-[20px] px-4 bg-gray-800 text-white' onClick={scrollRight}>{'>'}</button>
-      </div>
-      </div>
-      
-
-
-
-      </div>
-
       )}
-    </div>
-  )
-}
 
-const Coincard = ({id,name,price,img,currencySymbol}) => {
+      {!loading && (
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+          <Chip onClick={() => changePage(page - 1)} className={page === 1 ? "opacity-40" : ""}>
+            Prev
+          </Chip>
+          {pageWindow(page, TOTAL_PAGES).map((item, index) =>
+            item === "…" ? (
+              <span key={`ellipsis-${index}`} className="px-1 text-white/50">
+                …
+              </span>
+            ) : (
+              <Chip
+                key={item}
+                active={item === page}
+                onClick={() => changePage(item)}
+              >
+                {item}
+              </Chip>
+            )
+          )}
+          <Chip
+            onClick={() => changePage(page + 1)}
+            className={page === TOTAL_PAGES ? "opacity-40" : ""}
+          >
+            Next
+          </Chip>
+        </div>
+      )}
+    </PageShell>
+  );
+};
+
+const CoinCard = ({ id, name, symbol, price, img, change, rank, currencySymbol }) => {
+  const up = change == null ? null : change >= 0;
+
   return (
-    <Link to={`/coin/${id}`}>
-    <div className='w-[120px] sm:w-[200px] shadow-lg flex flex-col items-center content-center p-5 gap-5 shadow-white border-t-2 border-t-white rounded-lg'>
-      <img src={img} alt='nice' className='w-[100px] h-[100px] object-contain'/>
-      <h2 className='text-[18px] w-full text-center'>{name}</h2>
-      <p >{currencySymbol} {price}</p>
-    </div>
+    <Link to={`/coin/${id}`} className="block">
+      <article className="flex h-full flex-col items-center gap-3 rounded-xl border border-white/15 bg-black p-5 text-center shadow-card transition duration-200 hover:-translate-y-1 hover:border-cryptify-accent/70 hover:shadow-glow">
+        {rank != null && (
+          <span className="self-end rounded bg-white px-2 py-0.5 text-xs text-black">
+            #{rank}
+          </span>
+        )}
+        <img src={img} alt="" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
+        <h2 className="text-base text-white sm:text-lg">{name}</h2>
+        <p className="text-xs uppercase tracking-wider text-white/50">{symbol}</p>
+        <p className="text-sm text-white sm:text-base">
+          {currencySymbol} {formatNumber(price)}
+        </p>
+        <p className={`text-sm ${up == null ? "text-white/50" : up ? "text-up" : "text-down"}`}>
+          {formatPercent(change)}
+        </p>
+      </article>
     </Link>
-  )
-}
+  );
+};
 
-
-export default Coins
+export default Coins;
