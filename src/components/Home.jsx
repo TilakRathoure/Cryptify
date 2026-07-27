@@ -1,29 +1,63 @@
-import React from 'react'
-import img1 from "../assests/1_VqKuTe9DmMZZRT0ERH2t4Q__1_-removebg.png"
+import React from "react";
+import { Link } from "react-router-dom";
+import heroCoin from "../assests/1_VqKuTe9DmMZZRT0ERH2t4Q__1_-removebg.png";
 
-
+const pills = ["Real-time", "Comprehensive", "Insightful"];
 
 const Home = () => {
-
-  const list=[{name:"Real-time"},{name:"Comprehensive"},{name:"Insightful"}]
-
   return (
-    <div className='bg-black px-5 h-[58vh] pt-[80px]'>
-      <h1 className='custom w-full text-center text-white text-5xl uppercase mb-[-15px] '>Cryptify</h1>
-      <div id="move" className='py-[0px] w-full flex h-[200px] justify-center items-center relative '>
-        <div>
-          <img src={img1} alt="" className=''/>
-      </div>
-        <img src={img1} alt="" className='absolute top-[75px] opacity-25 blur-sm' />
-      </div>
-      <div className='text-white w-full mt-5 '>
-        <ul className='flex w-full justify-around'>{list.map((e)=>(
-          <li className='border-2 border-white rounded-full p-4 z-5'>{e.name}</li>
-        ))}</ul>
-      </div>
-    </div>
+    <section className="relative flex min-h-[calc(100vh-10.5rem)] flex-col items-center justify-center overflow-hidden bg-cryptify-bg px-4 py-12 text-center">
+      <h1 className="text-4xl uppercase tracking-[0.28em] text-white sm:text-5xl md:text-6xl">
+        Cryptify
+      </h1>
+      <p className="mt-4 max-w-xl text-sm text-white/70 sm:text-base">
+        Track prices, compare exchanges, and analyze trends — your gateway to
+        the crypto world.
+      </p>
 
-  )
-}
+      <div
+        id="move"
+        className="relative z-0 my-8 flex h-[200px] w-full items-center justify-center overflow-hidden sm:h-[240px]"
+      >
+        <img
+          src={heroCoin}
+          alt=""
+          className="relative z-10 max-h-full w-auto object-contain pointer-events-none"
+        />
+        <img
+          src={heroCoin}
+          alt=""
+          className="pointer-events-none absolute top-[40px] max-h-full w-auto opacity-25 blur-sm"
+        />
+      </div>
 
-export default Home
+      <ul className="relative z-10 mb-8 flex flex-wrap items-center justify-center gap-3">
+        {pills.map((name) => (
+          <li
+            key={name}
+            className="rounded-full border border-cryptify-accent/80 px-5 py-2 text-sm text-white sm:px-6 sm:py-2.5"
+          >
+            {name}
+          </li>
+        ))}
+      </ul>
+
+      <div className="relative z-10 flex flex-wrap items-center justify-center gap-3">
+        <Link
+          to="/coins"
+          className="rounded-full bg-cryptify-accent px-6 py-2.5 text-sm font-medium text-black transition hover:bg-yellow-200"
+        >
+          Explore Coins
+        </Link>
+        <Link
+          to="/exchange"
+          className="rounded-full border border-white/30 px-6 py-2.5 text-sm text-white transition hover:border-cryptify-accent hover:text-cryptify-accent"
+        >
+          View Exchanges
+        </Link>
+      </div>
+    </section>
+  );
+};
+
+export default Home;
