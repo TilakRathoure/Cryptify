@@ -8,6 +8,7 @@ import {
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from "chart.js";
 
@@ -18,6 +19,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend
 );
 
@@ -25,7 +27,7 @@ const Chart = ({ arr = [], currency, days }) => {
   const prices = [];
   const date = [];
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < arr.length; i += 1) {
     if (days === "24h") date.push(new Date(arr[i][0]).toLocaleTimeString());
     else date.push(new Date(arr[i][0]).toLocaleDateString());
     prices.push(arr[i][1]);
@@ -38,32 +40,45 @@ const Chart = ({ arr = [], currency, days }) => {
         label: `Price in ${currency}`,
         data: prices,
         borderColor: "#0aabcf",
-        backgroundColor: "#0aabcf",
-        color:"white"
+        backgroundColor: "rgba(10, 171, 207, 0.12)",
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.25,
+        fill: true,
       },
     ],
   };
 
   return (
-    <div className="md:h-[75vh]">
-    <Line
-    options={{
-      responsive:true,
-      scales: {
-        x: {
-          ticks: {
-            color: "white"
-          }
-        },
-        y: {
-          ticks: {
-            color: "white"
-          }
-        }
-      }
-      }}
-      data={data}
-    /></div>
+    <div className="h-[280px] w-full sm:h-[340px] lg:h-[380px]">
+      <Line
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              mode: "index",
+              intersect: false,
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: "rgba(255,255,255,0.7)",
+                maxTicksLimit: 6,
+              },
+              grid: { color: "rgba(255,255,255,0.06)" },
+            },
+            y: {
+              ticks: { color: "rgba(255,255,255,0.7)" },
+              grid: { color: "rgba(255,255,255,0.06)" },
+            },
+          },
+        }}
+        data={data}
+      />
+    </div>
   );
 };
 
