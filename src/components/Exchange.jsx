@@ -1,74 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { server } from '..';
-import Loader from './Loader'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { server } from "..";
+import ErrorState from "./ErrorState";
+import Loader from "./Loader";
+import PageShell from "./PageShell";
 
 const Exchanges = () => {
-    const [exchanges,setexchanges]=useState([]);
-    const [loading,setloading]=useState(true);
-    const [error,seterror]=useState(false);
+  const [exchanges, setExchanges] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-
-    useEffect(()=>{
-        const fetchapi=async ()=>{
-            try{
-            const {data}=await axios.get(`${server}/exchanges`);
-            setexchanges(data);
-            setloading(false);
-            }catch(error){
-                seterror(true);
-                setloading(false);
-            }
-        }
-        fetchapi();
-    },[]);
-
-
-    if(error){
-      return(
-        <div className='custom h-[58vh]'>
-        <h1 className='text-xl mt-[10px]'>An Error has Occured while fetching data, try changing page or reloading!</h1>
-        </div>
-      )
-    }
-
-
-  return (
-    <div className='custom'>
-      {loading? (
-      <Loader/>
-      ):(
-        <div>
-
-        <h1 className='bg-black p-12 text-white text-[18px] border-2 border-white'>Discover top cryptocurrency trading platforms. Click to access each site directly. Stay informed, trade smarter with Cryptify.</h1>
-
-
-        <div className='h-full w-full flex flex-wrap gap-10 p-12 justify-center custom bg-black'>
-
-      {exchanges.map((i)=>(
-        <ExchangeCard key={i.id} name={i.name} img={i.image} rank={i.trust_score_rank} url={i.url} />
-
-      ))}
-      </div>
-
-      </div>
-      )
+  useEffect(() => {
+    const fetchExchanges = async () => {
+      try {
+        const { data } = await axios.get(`${server}/exchanges`);
+        setExchanges(data);
+      } catch (err) {
+        setError(true);
+      } finally {
+        setLoading(false);
       }
-    </div>
-  )
-}
+    };
+    fetchExchanges();
+  }, []);
 
-const ExchangeCard = ({name,img,rank,url}) => {
+  if (error) {
+    return (
+      <PageShell>
+        <ErrorState />
+      </PageShell>
+    );
+  }
+
   return (
-    <a href={url} target='blank'>
-    <div className='border-t-2 border-t-white rounded-xl w-[120px] sm:w-[150px] md:w-[200px] shadow-lg  flex flex-col items-center content-center p-5 gap-5 text-white shadow-white'>
-      <img src={img} alt='nice' className='w-[100px] h-[100px]'/>
-      <h2 className='text-[18px] w-full text-center'>{name}</h2>
-      <p > {rank}</p>
-    </div>
+    <PageShell>
+      <p className="max-w-3xl text-base leading-relaxed text-white/80 sm:text-lg">
+        Discover top cryptocurrency trading platforms. Click to access each site
+        directly. Stay informed, trade smarter with Cryptify.
+      </p>
+
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
+          {exchanges.map((item) => (
+            <ExchangeCard
+              key={item.id}
+              name={item.name}
+              img={item.image}
+              rank={item.trust_score_rank}
+              url={item.url}
+            />
+          ))}
+        </div>
+      )}
+    </PageShell>
+  );
+};
+
+const ExchangeCard = ({ name, img, rank, url }) => {
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
+      <article className="flex h-full flex-col items-center gap-3 rounded-xl border border-white/15 bg-black p-5 text-center shadow-card transition duration-200 hover:-translate-y-1 hover:border-cryptify-accent/70 hover:shadow-glow">
+        {rank != null && (
+          <span className="self-end rounded bg-white px-2 py-0.5 text-xs text-black">
+            #{rank}
+          </span>
+        )}
+        <img src={img} alt="" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
+        <h2 className="text-base text-white sm:text-lg">{name}</h2>
+        <p className="text-sm text-white/50">Trust rank</p>
+      </article>
     </a>
-  )
-}
+  );
+};
 
-
-export default Exchanges
+export default Exchanges;
