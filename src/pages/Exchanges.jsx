@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { server } from "..";
-import ErrorState from "./ErrorState";
-import Loader from "./Loader";
-import PageShell from "./PageShell";
+import { getExchanges } from "../api/exchanges";
+import ExchangeCard from "../components/exchanges/ExchangeCard";
+import ErrorState from "../components/ui/ErrorState";
+import Loader from "../components/ui/Loader";
+import PageShell from "../components/layout/PageShell";
 
 const Exchanges = () => {
   const [exchanges, setExchanges] = useState([]);
@@ -13,7 +13,7 @@ const Exchanges = () => {
   useEffect(() => {
     const fetchExchanges = async () => {
       try {
-        const { data } = await axios.get(`${server}/exchanges`);
+        const { data } = await getExchanges();
         setExchanges(data);
       } catch (err) {
         setError(true);
@@ -55,23 +55,6 @@ const Exchanges = () => {
         </div>
       )}
     </PageShell>
-  );
-};
-
-const ExchangeCard = ({ name, img, rank, url }) => {
-  return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
-      <article className="flex h-full flex-col items-center gap-3 rounded-xl border border-white/15 bg-black p-5 text-center shadow-card transition duration-200 hover:-translate-y-1 hover:border-cryptify-accent/70 hover:shadow-glow">
-        {rank != null && (
-          <span className="self-end rounded bg-white px-2 py-0.5 text-xs text-black">
-            #{rank}
-          </span>
-        )}
-        <img src={img} alt="" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
-        <h2 className="text-base text-white sm:text-lg">{name}</h2>
-        <p className="text-sm text-white/50">Trust rank</p>
-      </article>
-    </a>
   );
 };
 

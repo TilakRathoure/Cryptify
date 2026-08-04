@@ -1,5 +1,5 @@
 import React from "react";
-import { CURRENCIES } from "../constants";
+import { CURRENCIES } from "../../utils/format";
 import Chip from "./Chip";
 
 const CurrencyToggle = ({ value, onChange }) => {

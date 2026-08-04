@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { server } from "..";
-import { currencySymbol, formatNumber, formatPercent } from "../constants";
-import Chip from "./Chip";
-import CurrencyToggle from "./CurrencyToggle";
-import EmptyState from "./EmptyState";
-import ErrorState from "./ErrorState";
-import Loader from "./Loader";
-import PageShell from "./PageShell";
+import { getMarkets } from "../api/coins";
+import { currencySymbol } from "../utils/format";
+import CoinCard from "../components/coins/CoinCard";
+import Chip from "../components/ui/Chip";
+import CurrencyToggle from "../components/ui/CurrencyToggle";
+import EmptyState from "../components/ui/EmptyState";
+import ErrorState from "../components/ui/ErrorState";
+import Loader from "../components/ui/Loader";
+import PageShell from "../components/layout/PageShell";
 
 const TOTAL_PAGES = 132;
 
@@ -44,9 +43,7 @@ const Coins = () => {
       try {
         setLoading(true);
         setError(false);
-        const { data } = await axios.get(
-          `${server}/coins/markets?vs_currency=${currency}&page=${page}`
-        );
+        const { data } = await getMarkets(currency, page);
         setCoins(data);
       } catch (err) {
         setError(true);
@@ -149,31 +146,6 @@ const Coins = () => {
         </div>
       )}
     </PageShell>
-  );
-};
-
-const CoinCard = ({ id, name, symbol, price, img, change, rank, currencySymbol }) => {
-  const up = change == null ? null : change >= 0;
-
-  return (
-    <Link to={`/coin/${id}`} className="block">
-      <article className="flex h-full flex-col items-center gap-3 rounded-xl border border-white/15 bg-black p-5 text-center shadow-card transition duration-200 hover:-translate-y-1 hover:border-cryptify-accent/70 hover:shadow-glow">
-        {rank != null && (
-          <span className="self-end rounded bg-white px-2 py-0.5 text-xs text-black">
-            #{rank}
-          </span>
-        )}
-        <img src={img} alt="" className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
-        <h2 className="text-base text-white sm:text-lg">{name}</h2>
-        <p className="text-xs uppercase tracking-wider text-white/50">{symbol}</p>
-        <p className="text-sm text-white sm:text-base">
-          {currencySymbol} {formatNumber(price)}
-        </p>
-        <p className={`text-sm ${up == null ? "text-white/50" : up ? "text-up" : "text-down"}`}>
-          {formatPercent(change)}
-        </p>
-      </article>
-    </Link>
   );
 };
 

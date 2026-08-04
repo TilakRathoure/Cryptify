@@ -1,14 +1,13 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { server } from "../index";
-import { currencySymbol, formatNumber, formatPercent } from "../constants";
-import Chart from "./Chart";
-import Chip from "./Chip";
-import CurrencyToggle from "./CurrencyToggle";
-import ErrorState from "./ErrorState";
-import Loader from "./Loader";
-import PageShell from "./PageShell";
+import { getCoin, getCoinMarketChart } from "../api/coins";
+import { currencySymbol, formatNumber, formatPercent } from "../utils/format";
+import Chart from "../components/coins/Chart";
+import Chip from "../components/ui/Chip";
+import CurrencyToggle from "../components/ui/CurrencyToggle";
+import ErrorState from "../components/ui/ErrorState";
+import Loader from "../components/ui/Loader";
+import PageShell from "../components/layout/PageShell";
 
 const RANGE_BTNS = ["24h", "7d", "14d", "30d", "60d", "200d", "1y", "max"];
 
@@ -17,7 +16,7 @@ const daysFromRange = (key) => {
   return key;
 };
 
-const Coindetails = () => {
+const CoinDetails = () => {
   const params = useParams();
   const [coin, setCoin] = useState({});
   const [loading, setLoading] = useState(true);
@@ -34,9 +33,11 @@ const Coindetails = () => {
       try {
         setLoading(true);
         setError(false);
-        const { data } = await axios.get(`${server}/coins/${params.id}`);
-        const { data: chartData } = await axios.get(
-          `${server}/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`
+        const { data } = await getCoin(params.id);
+        const { data: chartData } = await getCoinMarketChart(
+          params.id,
+          currency,
+          days
         );
         setCoin(data);
         setChartArray(chartData.prices);
@@ -194,4 +195,4 @@ const CustomBar = ({ current, high, low, symbol }) => {
   );
 };
 
-export default Coindetails;
+export default CoinDetails;
